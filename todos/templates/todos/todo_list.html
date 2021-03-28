@@ -1,0 +1,72 @@
+{% load static %}
+<html Lang="en">
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width-device-width, initial-scale-1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie-edge">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+       <link rel="stylesheet" href="{% static 'todos/style.css'%}">
+        <title>Todos</title>
+    </head>
+    <body class="bg-white">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card">
+                        <div class="card-header shadow-sm bg-white">
+                            <h1 class="display-5 text-info">
+                                <i class="fas fa-check-double">Todo</i>
+                            </h1>
+                            <div class="card-body">
+                              
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+
+                                        <form action="{% url 'insert_todo_item' %}" method="post" autocomplete="off">
+                                            {% csrf_token%}
+                                            <div class="input-group">
+                                            <input type="text" class="form-control" name="content">
+                                            <div class="input-group-append text-info">
+                                                <span class="input-group-text bg-white py-0">
+                                                    <button type="submit" class="btn btn-sm text-info">
+                                                        <i class="fa fa-plus-circle fa-lg"></i>
+                                                    </button>
+                                                </span>
+                                              
+                                            </div>
+                                         
+                                        </div>
+                                        </form>
+                                    </li>
+                                    {% for todo in todo_list %}
+                                    <li class="list-group-item">
+                                        {{todo.content}}
+                                        <form action="{% url 'delete_todo_item' todo.id %}" method="post" class="float-right d-inline">
+                                            {% csrf_token%}
+                                            <button type="submit" class="btn">
+                                                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                            </button>
+                                        </form>
+                                    </li>
+                                    {% empty %}
+                                    <li class="list-group-item">
+                                        <span class="font-italic">No Todo item found </span>
+                                    </li>
+                                    {%endfor%}
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
