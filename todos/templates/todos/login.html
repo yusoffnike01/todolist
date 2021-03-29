@@ -1,0 +1,10 @@
+Login
+<form class="site-form" method="POST">
+    <div class="form-group">
+        {{form}}
+        
+    </div>
+   
+    {% csrf_token%}
+    <input type="submit" value="Sign-IN">
+</form>
